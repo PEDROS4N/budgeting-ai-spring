@@ -13,9 +13,22 @@ sirva tanto o fluxo REST quanto o fluxo de IA (Tool Calling).
 
 ## Como executar a aplicação
 
+**Mac/Linux/Git Bash:**
 ```bash
 export OPENAI_API_KEY="sua_chave_aqui"
 ./gradlew bootRun
+```
+
+**Windows (cmd):**
+```
+set OPENAI_API_KEY=sua_chave_aqui
+gradlew bootRun
+```
+
+**Windows (PowerShell):**
+```
+$env:OPENAI_API_KEY="sua_chave_aqui"
+.\gradlew bootRun
 ```
 
 A API sobe em `http://localhost:8080`. Banco H2 em memória, sem setup extra.
@@ -46,15 +59,25 @@ Duas evoluções pequenas e conectadas:
 
 Via REST (sem depender de áudio):
 
+**Mac/Linux/Git Bash:**
 ```bash
 curl -X POST http://localhost:8080/api/transactions \
   -H "Content-Type: application/json" \
-  -d '{"description":"Mercado","amount":150.00,"type":"EXPENSE","category":"alimentação","date":"2026-08-20"}'
+  -d '{"description":"Mercado","amount":150.00,"type":"EXPENSE","category":"alimentacao","date":"2026-08-20"}'
 
-curl http://localhost:8080/api/transactions/category/alimentação/balance
+curl http://localhost:8080/api/transactions/category/alimentacao/balance
 ```
 
-Via voz (fluxo completo IA):
+**Windows (cmd):**
+```
+curl -X POST http://localhost:8080/api/transactions -H "Content-Type: application/json" -d "{\"description\":\"Mercado\",\"amount\":150.00,\"type\":\"EXPENSE\",\"category\":\"alimentacao\",\"date\":\"2026-08-20\"}"
+
+curl http://localhost:8080/api/transactions/category/alimentacao/balance
+```
+
+(Categorias usadas nos exemplos sem acento para evitar problemas de encoding no terminal do Windows; a API aceita acentos normalmente.)
+
+Via voz (fluxo completo IA) — requer um arquivo de áudio real na pasta atual, ex: grave um `comando.mp3` dizendo algo como "gastei 50 reais com transporte":
 
 ```bash
 curl -X POST http://localhost:8080/api/voice-commands \
@@ -63,9 +86,9 @@ curl -X POST http://localhost:8080/api/voice-commands \
 
 Testes automatizados do use case principal da melhoria:
 
-```bash
-./gradlew test
-```
+**Mac/Linux/Git Bash:** `./gradlew test`
+**Windows (cmd):** `gradlew test`
+**Windows (PowerShell):** `.\gradlew test`
 
 ## O que foi aprendido
 
